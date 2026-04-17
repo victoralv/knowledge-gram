@@ -2,7 +2,7 @@
 name: knowledge-gram
 description: An "Instagram of Knowledge" skill. Users ask for knowledge about a specific topic, and the skill displays a scrollable feed of knowledge posts (facts or quizzes) in a webview UI. Supports static (facts) and interactive (quiz) modes.
 metadata:
-	homepage: https://github.com/google-ai-edge/gallery/tree/main/skills
+  homepage: https://github.com/victoralv/knowledge-gram
 ---
 
 # Knowledge-Gram
