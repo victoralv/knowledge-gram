@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Knowledge-Gram</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fafafa;
+      margin: 0;
+      padding: 0;
+    }
+    #container {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+    .post {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      margin-bottom: 24px;
+      padding: 20px 18px 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .post .text {
+      font-size: 1.1em;
+      font-weight: 500;
+      color: #222;
+    }
+    .post .options {
+      margin-top: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .post .option {
+      background: #f0f0f0;
+      border-radius: 6px;
+      padding: 8px 12px;
+      cursor: pointer;
+      border: none;
+      font-size: 1em;
+      transition: background 0.2s;
+    }
+    .post .option:hover {
+      background: #e0e0e0;
+    }
+    .post .justification {
+      font-size: 0.97em;
+      color: #666;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    // Receives JSON string from the skill and returns webview URL
+    const CACHE_KEY = 'KG_POSTS_CACHE';
+    function isValidKnowledgeGramData(obj) {
+      if (!obj || obj.ac !== 'pl' || !['st', 'in'].includes(obj.ty) || !Array.isArray(obj.kp)) return false;
+      for (const post of obj.kp) {
+        if (typeof post.tx !== 'string' || typeof post.ju !== 'string') return false;
+        if (obj.ty === 'in') {
+          if (!Array.isArray(post.op)) return false;
+          if (!post.op.every(opt => typeof opt === 'string')) return false;
+        }
+      }
+      return true;
+    }
+    window['ai_edge_gallery_get_result'] = async function(data) {
+      try {
+        // Usage in your handler:
+        const parsed = typeof data === 'string' ? JSON.parse(data) : data;
+        if (!isValidKnowledgeGramData(parsed)) {
+          return JSON.stringify({ error: 'Invalid Knowledge-Gram data format.' });
+        }
+                
+        // { action, type, knowledge_posts }
+        //if (parsed.action === 'play') {
+        localStorage.setItem(CACHE_KEY, JSON.stringify(parsed));
+          // Pass index.html window location as param
+        const indexLoc = encodeURIComponent(window.location.href);
+        return JSON.stringify({
+          webview: {
+            url: 'webview.html?datasize='+encodeURIComponent(data.length)+'&index_loc='+indexLoc,
+            aspectRatio: 1.0
+          }
+        });
+        //}
+        return JSON.stringify({ message: 'Unknown action.' });
+      } catch (e) {
+        return JSON.stringify({ error: e.message });
+      }
+    };
+  </script>
+</body>
+</html>
