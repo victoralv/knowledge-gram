@@ -11,9 +11,9 @@ Powered by **Gemma 4** running locally on your device. Instantly get a scrollabl
 
 [📋 SKILL.md](SKILL.md) · [🐛 Report an Issue](https://github.com/victoralv/knowledge-gram/issues)
 
-<img src="assets/facts.jpg" alt="facts preview" width="280"/>
-<img src="assets/quiz1.jpg" alt="quiz mode preview" width="280"/>
-<img src="assets/quiz2.jpg" alt="quiz mode 2 preview" width="280"/>
+<img src="assets/facts.jpg" alt="facts preview" width="230"/>
+<img src="assets/quiz1.jpg" alt="quiz mode preview" width="230"/>
+<img src="assets/quiz2.jpg" alt="quiz mode 2 preview" width="230"/>
 
 </div>
 
